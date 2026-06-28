@@ -1,16 +1,146 @@
-# React + Vite
+# 📋 Task Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A full-stack MERN task management app to manage your daily tasks efficiently.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- 📝 Create, edit, and delete tasks
+- 🔄 Update task status — Pending, In Progress, Completed
+- 🔍 Search tasks by title
+- 📊 Dashboard with task stats
+- 🗂️ Filter tasks by status
+- 🕒 Sort tasks by Newest or Oldest
+- 🔔 Toast notifications for all actions
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+**Frontend**
+- React 19
+- Axios
+- React Toastify
+- React Icons
+- Vite
+
+**Backend**
+- Node.js
+- Express 5
+- MongoDB + Mongoose
+- CORS
+- dotenv
+
+---
+
+## 📁 Project Structure
+
+```
+Task_Tracker/
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── TaskForm.jsx
+│   │   │   ├── TaskCard.jsx
+│   │   │   └── FilterBar.jsx
+│   │   ├── services/
+│   │   │   └── api.js
+│   │   └── App.jsx
+│   └── package.json
+└── backend/
+    ├── config/
+    │   └── db.js
+    ├── controllers/
+    │   └── taskController.js
+    ├── models/
+    │   └── Task.js
+    ├── routes/
+    │   └── taskRoutes.js
+    ├── server.js
+    └── package.json
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js v18+
+- MongoDB Atlas account
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/Task_Tracker.git
+cd Task_Tracker
+```
+
+### 2. Backend Setup
+
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file in the `backend` folder:
+
+```env
+PORT=4000
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/TaskTracker?retryWrites=true&w=majority
+```
+
+Start the backend:
+
+```bash
+npm start
+# or for development
+npm run dev
+```
+
+### 3. Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend runs at `http://localhost:5173`
+Backend runs at `http://localhost:4000`
+
+---
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/tasks` | Get all tasks |
+| GET | `/api/tasks/:id` | Get single task |
+| POST | `/api/tasks` | Create a task |
+| PUT | `/api/tasks/:id` | Update a task |
+| DELETE | `/api/tasks/:id` | Delete a task |
+
+---
+
+## 🌐 Deployment
+
+**Frontend** → [Vercel](https://vercel.com)
+- Root directory: `frontend`
+- Framework: Vite
+- Add env variable: `VITE_API_URL=https://your-backend.onrender.com/api`
+
+**Backend** → [Render](https://render.com)
+- Root directory: `backend`
+- Build command: `npm install`
+- Start command: `node server.js`
+- Add env variables: `MONGO_URI`, `PORT`
+
+---
+
+## 📄 License
+
+This project is licensed under the ISC License.
