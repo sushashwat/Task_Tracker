@@ -1,29 +1,32 @@
-function FilterBar({search, setSearch}) {
-  return (
+function FilterBar({ search, setSearch }) {
+    return (
 
-    <div className="filter">
+        <div className="filter">
 
-      <input
-        type="text"
-        placeholder="Search..."
-        onChange={(e)=> setSearch(e.target.value)}
-      />
+            <input
+                type="text"
+                placeholder="Search..."
+                onChange={(e) => setSearch(e.target.value)}
+            />
 
-      <select>
+            <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+            >
 
-        <option>All</option>
+                <option>All</option>
 
-        <option>Pending</option>
+                <option>Pending</option>
 
-        <option>In Progress</option>
+                <option>In Progress</option>
 
-        <option>Completed</option>
+                <option>Completed</option>
 
-      </select>
+            </select>
 
-    </div>
+        </div>
 
-  );
+    );
 }
 
 export default FilterBar;
