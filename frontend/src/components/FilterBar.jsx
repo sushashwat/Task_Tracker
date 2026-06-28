@@ -21,6 +21,10 @@ function FilterBar({ search, setSearch }) {
                 <option>In Progress</option>
 
                 <option>Completed</option>
+                
+                <option>Newest</option>
+
+                <option>Oldest</option>
 
             </select>
 
