@@ -1,4 +1,4 @@
-function FilterBar() {
+function FilterBar({search, setSearch}) {
   return (
 
     <div className="filter">
@@ -6,6 +6,7 @@ function FilterBar() {
       <input
         type="text"
         placeholder="Search..."
+        onChange={(e)=> setSearch(e.target.value)}
       />
 
       <select>

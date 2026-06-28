@@ -14,6 +14,7 @@ function App() {
 
   const [tasks, setTasks] = useState([]);
   const [editTask, setEditTask] = useState(null);
+  const [search, setSearch] = useState("");
   async function fetchTasks() {
 
     try {
@@ -36,6 +37,10 @@ function App() {
 
   }, []);
 
+  const filteredTasks = tasks.filter(task =>
+    task.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div>
 
@@ -43,15 +48,18 @@ function App() {
 
       <div className="container">
 
-        <TaskForm 
-        fetchTasks={fetchTasks}
-        editTask={editTask}
-        setEditTask={setEditTask} 
+        <TaskForm
+          fetchTasks={fetchTasks}
+          editTask={editTask}
+          setEditTask={setEditTask}
         />
 
-        <FilterBar />
+        <FilterBar
+        search={search}
+        setSearch={setSearch}
+        />
 
-        {tasks.map((task) => (
+        {filteredTasks.map((task) => (
 
           <TaskCard
             task={task}
