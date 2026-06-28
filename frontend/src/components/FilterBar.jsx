@@ -1,36 +1,51 @@
-function FilterBar({ search, setSearch }) {
-    return (
+import { FaSearch } from "react-icons/fa";
 
-        <div className="filter">
+function FilterBar({
+  search,
+  setSearch,
+  statusFilter,
+  setStatusFilter,
+  sort,
+  setSort,
+}) {
+  return (
+    <div className="filter-wrapper">
 
-            <input
-                type="text"
-                placeholder="Search..."
-                onChange={(e) => setSearch(e.target.value)}
-            />
+      <div className="search-box">
+        <FaSearch className="search-icon" />
 
-            <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-            >
+        <input
+          type="text"
+          placeholder="Search tasks..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
 
-                <option>All</option>
+      <div className="filter-selects">
 
-                <option>Pending</option>
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <option value="All">All Status</option>
+          <option value="Pending">🟡 Pending</option>
+          <option value="In Progress">🔵 In Progress</option>
+          <option value="Completed">🟢 Completed</option>
+        </select>
 
-                <option>In Progress</option>
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+        >
+          <option value="Newest">Newest First</option>
+          <option value="Oldest">Oldest First</option>
+        </select>
 
-                <option>Completed</option>
-                
-                <option>Newest</option>
+      </div>
 
-                <option>Oldest</option>
-
-            </select>
-
-        </div>
-
-    );
+    </div>
+  );
 }
 
 export default FilterBar;
