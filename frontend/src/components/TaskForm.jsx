@@ -1,79 +1,123 @@
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 
 function TaskForm({ fetchTasks, editTask, setEditTask }) {
-    const [task, setTask] = useState({
+  const [task, setTask] = useState({
+    title: "",
+    description: "",
+    status: "Pending",
+  });
+
+  useEffect(() => {
+    if (editTask) {
+      setTask({
+        title: editTask.title,
+        description: editTask.description,
+        status: editTask.status,
+      });
+    }
+  }, [editTask]);
+
+  function handleChange(e) {
+    setTask({
+      ...task,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!task.title.trim()) {
+      return toast.error("Task title is required");
+    }
+
+    try {
+      if (editTask) {
+        await api.put(`/tasks/${editTask._id}`, task);
+
+        toast.success("Task Updated");
+
+        setEditTask(null);
+      } else {
+        await api.post("/tasks", task);
+
+        toast.success("Task Added");
+      }
+
+      setTask({
         title: "",
         description: "",
         status: "Pending",
-    });
-    useEffect(() => {
-        if (editTask) {
-            setTask(editTask);
-        }
-    }, [editTask]);
+      });
 
-    function handleChange(e) {
-        setTask({
-            ...task,
-            [e.target.name]: e.target.value,
-        });
+      fetchTasks();
+    } catch (err) {
+      toast.error("Something went wrong");
     }
+  }
 
-    async function handleSubmit(e) {
-        e.preventDefault();
+  return (
+    <form className="task-form" onSubmit={handleSubmit}>
 
-        if (editTask) {
+      <h2>
+        {editTask ? "✏ Edit Task" : "➕ Add New Task"}
+      </h2>
 
-            await api.put(`/tasks/${editTask._id}`, task);
+      <div className="form-group">
 
-            toast.success("Task Updated");
+        <label>Task Title</label>
 
-            setEditTask(null);
+        <input
+          type="text"
+          name="title"
+          placeholder="Enter task title..."
+          value={task.title}
+          onChange={handleChange}
+        />
 
-        } else {
+      </div>
 
-            await api.post("/tasks", task);
+      <div className="form-group">
 
-            toast.success("Task Added");
+        <label>Description</label>
 
-        }
-    }
+        <textarea
+          name="description"
+          placeholder="Enter task description..."
+          value={task.description}
+          onChange={handleChange}
+        />
 
-    return (
-        <form className="task-form" onSubmit={handleSubmit}>
+      </div>
 
-            <input
-                type="text"
-                name="title"
-                placeholder="Task Title"
-                value={task.title}
-                onChange={handleChange}
-            />
+      <div className="form-bottom">
 
-            <textarea
-                name="description"
-                placeholder="Description"
-                value={task.description}
-                onChange={handleChange}
-            />
+        <div className="form-group">
 
-            <select
-                name="status"
-                value={task.status}
-                onChange={handleChange}
-            >
-                <option>Pending</option>
-                <option>In Progress</option>
-                <option>Completed</option>
-            </select>
+          <label>Status</label>
 
-            <button>Add Task</button>
+          <select
+            name="status"
+            value={task.status}
+            onChange={handleChange}
+          >
+            <option value="Pending"> Pending</option>
+            <option value="In Progress"> In Progress</option>
+            <option value="Completed"> Completed</option>
+          </select>
 
-        </form>
-    );
+        </div>
+
+        <button type="submit">
+          {editTask ? "Update Task" : "Add Task"}
+        </button>
+
+      </div>
+
+    </form>
+  );
 }
 
 export default TaskForm;
