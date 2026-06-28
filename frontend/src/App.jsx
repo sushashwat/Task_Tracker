@@ -15,6 +15,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [editTask, setEditTask] = useState(null);
   const [search, setSearch] = useState("");
+  const[sort,setSort] = useState("Newest");
   async function fetchTasks() {
 
     try {
@@ -37,9 +38,25 @@ function App() {
 
   }, []);
 
-  const filteredTasks = tasks.filter(task =>
-    task.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredTasks = tasks.filter((task) => {
+    const matchesSearch = task.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === "All" ||
+      task.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  filteredTasks.sort((a, b) => {
+  if (sort === "Newest") {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  }
+
+  return new Date(a.createdAt) - new Date(b.createdAt);
+});
 
   return (
     <div>
@@ -55,13 +72,14 @@ function App() {
         />
 
         <FilterBar
-        search={search}
-        setSearch={setSearch}
+          search={search}
+          setSearch={setSearch}
         />
 
         {filteredTasks.map((task) => (
 
           <TaskCard
+            key={task._id}
             task={task}
             fetchTasks={fetchTasks}
             setEditTask={setEditTask}
