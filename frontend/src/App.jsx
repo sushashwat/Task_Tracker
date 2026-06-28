@@ -13,7 +13,7 @@ import "./App.css";
 function App() {
 
   const [tasks, setTasks] = useState([]);
-
+  const [editTask, setEditTask] = useState(null);
   async function fetchTasks() {
 
     try {
@@ -43,16 +43,20 @@ function App() {
 
       <div className="container">
 
-        <TaskForm fetchTasks={fetchTasks} />
+        <TaskForm 
+        fetchTasks={fetchTasks}
+        editTask={editTask}
+        setEditTask={setEditTask} 
+        />
 
         <FilterBar />
 
         {tasks.map((task) => (
 
           <TaskCard
-            key={task._id}
             task={task}
             fetchTasks={fetchTasks}
+            setEditTask={setEditTask}
           />
 
         ))}

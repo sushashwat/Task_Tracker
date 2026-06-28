@@ -1,7 +1,7 @@
 import api from "../services/api";
 import { toast } from "react-toastify";
 
-function TaskCard({ task, fetchTasks }) {
+function TaskCard({ task, fetchTasks, setEditTask }) {
 
   async function deleteTask() {
 
@@ -34,7 +34,10 @@ function TaskCard({ task, fetchTasks }) {
 
       <div className="buttons">
 
-        <button className="edit">
+        <button 
+        className="edit"
+        onClick={()=> setEditTask(task)}
+        >
           Edit
         </button>
 
